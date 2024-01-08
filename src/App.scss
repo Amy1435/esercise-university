@@ -1,0 +1,50 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #edf3f6;
+    color: #023047;
+    padding-left: 2rem;
+}
+img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+.university-container {
+    display: grid;
+    grid-template-columns: repeat(2, 700px);
+
+    gap: 1rem;
+
+    .university-list {
+        display: grid;
+        grid-template-columns: 450px 300px;
+        background-color: #a6d9f7;
+        border-radius: 0.5rem;
+
+        .university-name {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .university-details {
+            padding-left: 1rem;
+            a {
+                text-decoration: none;
+                color: inherit;
+                font-style: italic;
+            }
+        }
+    }
+}

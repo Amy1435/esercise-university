@@ -1,12 +1,15 @@
 import { useState } from "react";
-import "./App.css";
+import "./App.scss";
 import { useEffect } from "react";
 import UniversityList from "./UniversityList";
 import SearchBar from "./SearchBar";
 
 function App() {
-    const [universities, setUniversities] = useState();
+    const [universities, setUniversities] = useState([]);
+    const [filterUnis, setFilterUnis] = useState([]); //using this so you will be able to make more research. because after one you make a filter and the other university arr gonr forever
+    const [error, setError] = useState(false);
     const [value, setValue] = useState("");
+    const [numberOfResearch, setNumberOfResearch] = useState(0);
     /////////////////////////// university list /////////////////////////////////////////////////
     const fetchUniversityData = async () => {
         try {
@@ -23,8 +26,10 @@ function App() {
             });
 
             setUniversities(newObj);
+            setFilterUnis(newObj);
         } catch (err) {
             console.log(err);
+            setError(true);
         }
     };
 
@@ -32,18 +37,28 @@ function App() {
         fetchUniversityData();
     }, []);
 
-    /////////////////////////// searchBar /////////////////////////////////////////////////
+    /////////////////////////// searchbar /////////////////////////////////////////////////
     const handleChange = (e) => {
         setValue(e.target.value);
         console.log(value);
     };
 
     const handleClick = async () => {
-        const uni = universities.filter((e) =>
+        const uniResearch = universities.filter((e) =>
             e.name.toLowerCase().includes(value.toLowerCase())
         );
-        setUniversities(uni);
+        setFilterUnis(uniResearch);
+        setValue("");
+        setNumberOfResearch(numberOfResearch + 1);
     };
+
+    const handleSort = () => {
+        const uniSort = [...universities].sort((a, b) =>
+            a.name > b.name ? 1 : -1
+        );
+        setFilterUnis(uniSort);
+    };
+    //////////////////////////////////////////////////////////////////////////////////////
 
     return (
         <>
@@ -53,8 +68,10 @@ function App() {
                         value={value}
                         handleChange={handleChange}
                         handleClick={handleClick}
+                        numberOfResearch={numberOfResearch}
+                        handleSort={handleSort}
                     />
-                    <UniversityList list={universities} />
+                    <UniversityList list={filterUnis} />
                 </>
             )}
         </>

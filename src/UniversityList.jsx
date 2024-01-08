@@ -1,14 +1,30 @@
 const UniversityList = ({ list }) => {
     return (
         <>
-            {list.map((university, i) => (
-                <div key={`university${i}`}>
-                    <h1>{university.name}</h1>
-                    <a href={university.url} target="_blank" rel="noreferrer">
-                        {university.name} Website Link
-                    </a>
-                </div>
-            ))}
+            <div className="university-container">
+                {list.map((university, i) => (
+                    <div key={`university${i}`} className="university-list">
+                        <div className="university-details">
+                            <p className="university-name">{university.name}</p>
+
+                            <p> University Website Link:</p>
+                            <a
+                                href={university.url}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {university.name}
+                            </a>
+                        </div>
+                        <figure>
+                            <img
+                                src={`https://source.unsplash.com/random/?university-${i}`}
+                                alt=""
+                            />
+                        </figure>
+                    </div>
+                ))}
+            </div>
         </>
     );
 };
